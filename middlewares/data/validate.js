@@ -66,11 +66,6 @@ module.exports = {
         },
     },
     tripp: {
-// •	The Starting Point - End Point - Starting and End point should be at least 4 characters long (each) and should be separated with single space, dash and another single space (" - ")
-// •	The Date - Time - Date and Time should be at least 6 characters long (each) and should be separated with single space, dash and another single space (" - ")
-// •	The CarImage - should be actual link refering to the car image
-// •	The Seats should be positive number
-// •	The description should be minimum 10 characters long
         create(req, res, next) {
             let {startAndEndPoint, dateTime, carImage, seats, description} = req.body;
 
@@ -78,40 +73,18 @@ module.exports = {
                 errors: [],
             };
 
-            req.body.startPoint = startAndEndPoint.split(' - ')[0];
-            req.body.endPoint = startAndEndPoint.split(' - ')[1];
-
-            req.body.date = dateTime.split(' - ')[0];
-            req.body.time = dateTime.split(' - ')[1];
-
-            let startPoint = req.body.startPoint.trim();
-            let endPoint = req.body.startPoint.trim();
-
-            let date = req.body.date;
-            let time = req.body.time;
-
-            if (startPoint.length === 0 || startPoint.length < constants.START_POINT_MIN_LENGTH) {
-                tripp.errors.push(msg.START_POINT_MIN_LENGTH);
+            startAndEndPoint = startAndEndPoint.trim();
+            if (!constants.START_END_POINT_REGEX.test(startAndEndPoint)) {
+                tripp.errors.push(msg.START_END_POINT_INVALID);
             } else {
-                tripp.startPoint = startPoint;
+                tripp.startAndEndPoint = startAndEndPoint;
             }
 
-            if (endPoint.length === 0 || endPoint.length < constants.END_POINT_MIN_LENGTH) {
-                tripp.errors.push(msg.END_POINT_MIN_LENGTH);
+            dateTime = dateTime.trim();
+            if (!constants.DATETIME_REGEX.test(dateTime)) {
+                tripp.errors.push(msg.DATETIME_INVALID);
             } else {
-                tripp.endPoint = endPoint;
-            }
-
-            if (date.length === 0 || date.length < constants.DATE_MIN_LENGTH) {
-                tripp.errors.push(msg.DATE_MIN_LENGTH);
-            } else {
-                tripp.date = date;
-            }
-
-            if (time.length === 0 || time.length < constants.TIME_MIN_LENGTH) {
-                tripp.errors.push(msg.TIME_MIN_LENGTH);
-            } else {
-                tripp.time = time;
+                tripp.dateTime = dateTime;
             }
 
             if (!constants.CAR_IMAGE_URL_REGEX.test(carImage)) {
@@ -136,8 +109,8 @@ module.exports = {
                 next();
                 return;
             }
-            res.render('tripps/create', {...tripp, message: tripp.errors.shift()})
 
+            res.render('tripps/create', {...tripp, message: tripp.errors.shift()})
         }
     }
 }
