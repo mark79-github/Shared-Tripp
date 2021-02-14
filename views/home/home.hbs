@@ -1,0 +1,58 @@
+{{#if isLogged}}
+    <div class="container" style="height: 90vh;">
+        <!-- Jumbotron Header -->
+        <header class="jumbotron my-4">
+            <h1 class="display-3">Welcome ShareTrippers!</h1>
+            <p class="lead">SharedTripp is the best way to road across the country. <br> Find yours SharedTripp's
+                buddies, when you share with us yours tripp plans and let the exploration begin!</p>
+            <a href="/tripps/create" class="btn btn-primary btn-lg">Offer Tripp!</a>
+        </header>
+
+        <!-- Page Features -->
+        <div class="row text-center">
+
+            {{#each tripps}}
+                {{>sharedTrip}}
+            {{else}}
+                <div style="width: 100%;">
+                    <img style="max-width: 500px;" src="/img/hitchhiker.jpg"/>
+                    <p class="lead" style=" width: 100%; text-align: center; font-size: 22px; font-style: italic;">
+                        Hitchhiker time...</p>
+                </div>
+            {{/each}}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top"
+                         src="/img/cybertruck.jpg"
+                         alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">Sofia - Elon Musk's Mantion</h4>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/tripps/details/asd" class="btn btn-primary">Find Out More!</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+{{else}}
+    <section class="py-5 bg-image-full"
+             style="background-image: url('/img/ford_ranger_2-1900x1080.jpg'); background-repeat: no-repeat;">
+        <!-- Put anything you want here! There is just a spacer below for demo purposes! -->
+        <div style="height: 70vh;"></div>
+    </section>
+    <section class="py-5">
+        <div class="container">
+            <h1>SharedTripp</h1>
+            <div>
+                <p class="lead" style="font-size: 24px; font-style: italic;">"Because the greatest part of a road trip
+                    isn't arriving at your destination. It's all the wild stuff that happens along the way..."
+                </p>
+            </div>
+        </div>
+    </section>
+{{/if}}
+
+
